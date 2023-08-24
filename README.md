@@ -14,8 +14,8 @@ In the following table, replace the instructor's info with your student id, full
 A random database topic will be assigned by the instructor to all the students. As soon as it is assigned, fill out the following table with your topic´s info.
 
 |       Topic Description        |              Date Assigned                 |
-| ------------------------------ | ------------------------------------------ |
-|         your topic             |       the date the topic was assigned      |
+| ------------------------------ | --------------------------------- |
+|         Eco-Friendly Transportation           |       Aug 23 2023     |
 
 
 All the work in this course is divided into two milestones, each of them has several checkpoints. Checkpoints are cumulative work. That's it, all checkpoints 
