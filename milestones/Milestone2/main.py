@@ -6,10 +6,11 @@ requirements for this assignments.
 """
 
 import discord
+import  os 
 from discord.ext import commands
 from models import *
 
-TOKEN = 'your Discord token'
+TOKEN = os.environ["DISCORD_TOKEN"]
 
 intents = discord.Intents.all()
 
@@ -27,10 +28,58 @@ async def _test(ctx, arg1):
 #       (1) Replace the commands' names with your own commands
 #       (2) Write the description of your business requirement in the description parameter
 #       (3) Implement your commands' methods.
+# @bot.command(name="avgWeather", description="Get average temperature and humidity for a specific city")
+# async def avgWeather(ctx, city_name: str):
+#     try:
+#         weather_report = CityModel.get_avg_weather_by_city()
+#         city_weather = next((city for city in weather_report if city['city_name'].lower() == city_name.lower()), None)
 
-@bot.command(name="cmd_1", description="database business requirement #1 here")
-async def _command1(ctx, *args):
-    await ctx.send("This method is not implemented yet")
+#         if not city_weather:
+#             await ctx.send(f"No weather data available for {city_name}.")
+#             return
+
+#         response = f"{city_weather['city_name']}: Avg Temp: {city_weather['avg_temp']}, Avg Humidity: {city_weather['avg_humidity']}"
+#         await ctx.send(response)
+#     except Exception as e:
+#         await ctx.send(f"An error occurred: {e}")
+@bot.command(name="recentNotifications", description="Displays the most recent notification")
+async def recentNotification(ctx):
+    try:
+        recent_notification = NotificationModel().get_most_recent_notification()
+        if not recent_notification:
+            await ctx.send("No recent notifications.")
+            return
+
+        # Check if recent_notification is a dictionary and has the expected keys
+        if isinstance(recent_notification, dict) and 'type' in recent_notification and 'count' in recent_notification:
+            response = f"Type: {recent_notification['type']}, Count: {recent_notification['count']}"
+        else:
+            response = "Unexpected data format for notification."
+
+        await ctx.send(response)
+    except Exception as e:
+        await ctx.send(f"An error occurred: {e}")
+
+@bot.command(name="findFuelStations", description="Retrieves all fueling stations within the provided zipcode")
+async def findFuelStations(ctx, zipcode: str):
+    try:
+        stations = FuelingStationModel().find_by_zipcode(zipcode)
+        if not stations:
+            await ctx.send(f"No fueling stations found for zipcode {zipcode}.")
+            return
+
+        # response = "\n".join([f"Station Name: ["test"], Location: {station['station_location']}" for station in stations])
+        response = "test"
+        await ctx.send(response)
+    except Exception as e:
+        await ctx.send(f"An error occurred: {e}")
+
+
+
+
+
+
+
 
 
 @bot.command(name="cmd_2", description="database business requirement #2 here")
